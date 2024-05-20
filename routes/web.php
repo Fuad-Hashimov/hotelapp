@@ -13,11 +13,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/customer',[CustomerController::class,'index'])->name('customer_show');
 Route::get('/customer/create',[CustomerController::class,'create'])->name('customer_create');
-Route::get('/customer/show/{id}',[CustomerController::class,'show'])->name('customer_show');
-Route::get('/customer/delete/{id}',[CustomerController::class,'destroy'])->name('customer_destroy');
+Route::get('/customer/edit/{customer}',[CustomerController::class,'edit'])->name('customer_edit');
 
-
-Route::post('/customer/update/{id}',[CustomerController::class,'update'])->name('customer_update');
+Route::delete('/customer/delete/{id}',[CustomerController::class,'destroy'])->name('customer_destroy');
+Route::put('/customer/update/{id}',[CustomerController::class,'update'])->name('customer_update');
 Route::post('/customer',[CustomerController::class,'store'])->name('customer_store');
 
 

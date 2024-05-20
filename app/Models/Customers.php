@@ -15,4 +15,19 @@ class Customers extends Model
         'lastname',
         'sales'
     ];
+
+    public function address()
+    {
+        return $this->hasOne(Address::class);
+    }
+
+    public function works()
+    {
+        return $this->hasMany(Works::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(Images::class);
+    }
 }
