@@ -6,6 +6,7 @@ use App\Models\Address;
 use App\Models\Customers;
 use App\Models\Works;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
@@ -16,7 +17,7 @@ class CustomerController extends Controller
         // $customers = Customers::all();
         // $customers = Customers::Paginate(10);
         $customers = Customers::with('address')->with('works')->with('images')->paginate(10);
-        
+
         return view('customer.index', compact('customers'));
     }
 
@@ -55,12 +56,12 @@ class CustomerController extends Controller
 
             foreach ($request->file('images') as $image) {
                 $filename = $image->getClientOriginalName();
-                $path = $image->store('customer_images');
+                $path = $image->store('customer_images', 'public');
 
                 $customer->images()->create([
                     'file_name' => $filename,
                     'file_path' => $path,
-                    'customers_id'=> $customer->id
+                    'customers_id' => $customer->id
                 ]);
             }
         }
@@ -87,6 +88,8 @@ class CustomerController extends Controller
     public function edit($id)
     {
         $customer = Customers::findOrFail($id);
+        // $works = Works::get();
+        // return dd($works);
         return view('customer.edit', compact('customer'));
     }
 
@@ -115,6 +118,18 @@ class CustomerController extends Controller
         $address->country = $request->country;
         $address->save();
 
+        $newWorks = $request->works;
+        if ($newWorks) {
+            $customer->works()->delete();
+            foreach ($newWorks as $work) {
+                $customer->works()->create([
+                    'work' => $work,
+                ]);
+            }
+        }
+
+        
+
         return redirect()->route('customer_show')->with("success", 'Update Olundu');
     }
 
@@ -130,7 +145,11 @@ class CustomerController extends Controller
             $work->delete();
         }
 
-
+        $images = $customer->images;
+        foreach ($images as $image) {
+            Storage::disk('public')->delete($image->file_path);
+            $image->delete();
+        }
 
         $customer->delete();
         return redirect()->route('customer_show')->with('success', "silindi");

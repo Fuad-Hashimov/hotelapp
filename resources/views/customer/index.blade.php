@@ -5,7 +5,7 @@
     <table class="w-4/5 mt-5  mx-auto bg-white">
         <thead class="bg-gray-800 text-white">
             <tr>
-                {{-- <th class="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">Images</th> --}}
+                <th class="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">Images</th>
                 <th class="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">Name</th>
                 <th class="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">Last name</th>
                 <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Sales</th>
@@ -18,11 +18,30 @@
         </thead>
         <tbody class="text-gray-700">
             @if (Session::has('success'))
-                <p>{{Session::get('success')}}</p>
+                <p>{{ Session::get('success') }}</p>
             @endif
             @foreach ($customers as $item)
+                {{-- {{print_r(dd($item->images[0]))}} --}}
                 <tr>
-                    {{-- <td class="w-1/3 text-left py-3 px-4">
+                    @if (isset($item->images))
+                        @foreach ($item->images as $image)
+                            {{-- {{ Storage::url($image->file_path)}} --}}
+                            <td>
+                                <img src=" {{ Storage::url($image->file_path) }}" class="w-16 h-16 object-cover" alt="">
+                            </td>
+
+                            {{-- <img src="{{ Storage::url($item->images[0]->file_path) }}" alt=""> --}}
+                        @endforeach
+                    @endif
+                    {{-- <td>
+
+                        @if (isset($item->images[0]))
+                            <img src="{{ Storage::url($item->images[0]->file_path) }}" alt="Customer Image"
+                                class="w-16 h-16 object-cover">
+                        @else
+                            <span>No Image</span>
+                        @endif
+
 
                     </td> --}}
                     <td class="w-1/3 text-left py-3 px-4">{{ $item->name }}</td>
@@ -33,20 +52,18 @@
                     <td class="w-1/3 text-left py-3 px-4">
                         <ul>
 
-                    @foreach ($item->works as $work)
+                            @foreach ($item->works as $work)
+                                <li>{{ $work->work }}</li>
+                            @endforeach
 
-                            <li>{{$work->work}}</li>
-
-                    @endforeach
-
-                </ul>
-                </td>
+                        </ul>
+                    </td>
                     <td class="text-left py-3 px-4"><a class="hover:text-blue-500"
                             href="{{ route('customer_edit', $item->id) }}">Update</a></td>
                     <td class="text-left py-3 px-4">
                         <form method="POST" action="{{ route('customer_destroy', $item->id) }}">
                             @csrf
-                            @method("delete")
+                            @method('delete')
                             <button class="hover:text-blue-500" type="submit">Delete</button>
                         </form>
                         {{-- <a  href="{{ route('customer_destroy', $item->id) }}">Delete</a> --}}
