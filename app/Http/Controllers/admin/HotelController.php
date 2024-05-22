@@ -19,7 +19,7 @@ class HotelController extends Controller
     public function index()
     {
         $hotels = $this->hotelservice->index();
-        return view('admin.hotel', compact('hotels'));
+        return view('admin.hotel_pages.hotel', compact('hotels'));
     }
 
     public function store(HotelFormsRequest $request)
@@ -31,13 +31,13 @@ class HotelController extends Controller
     public function edit($id)
     {
         $oldhotel = $this->hotelservice->edit($id);
-        return view('admin.updatehotel', compact('oldhotel'));
+        return view('admin.hotel_pages.updatehotel', compact('oldhotel'));
     }
 
     public function update(HotelFormsRequest $request, $id)
     {
-        $this->hotelservice->update($request,$id);
-        return redirect()->back()->with('success','Hotel is updated');
+        $this->hotelservice->update($request, $id);
+        return redirect()->back()->with('success', 'Hotel is updated');
     }
 
     public function destroy($id)
