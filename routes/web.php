@@ -3,11 +3,13 @@
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\LoginController as AdminLoginController;
 use App\Http\Controllers\admin\HotelController;
+use App\Http\Controllers\admin\RoomController;
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
 
 use App\Http\Controllers\LoginController;
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -69,6 +71,11 @@ Route::group(['prefix' => 'admin'], function () {
             Route::delete('{id}', [HotelController::class, 'destroy'])->name('admin.hotel.destroy');
         });
 
-        
+        Route::prefix('room')->group(function(){
+            Route::get('/',[RoomController::class,'index'])->name('admin.room.index');
+            Route::get('edit/{id}',[RoomController::class,'edit'])->name('admin.room.edit');
+        });
+
+
     });
 });

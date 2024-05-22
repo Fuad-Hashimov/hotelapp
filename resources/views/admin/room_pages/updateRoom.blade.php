@@ -19,7 +19,7 @@
         </div>
     </header>
 
- 
+
     <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
 
         <main class="w-full flex-grow p-6">
@@ -31,54 +31,78 @@
                     </p>
                     <div class="leading-loose">
                         @if (Session::has('success'))
-                        <div>
-                            <p class="text-blue-500 text-center text-6xl italic">{{ Session::get('success') }}
-                            </p>
-                        </div>
-                    @endif
-                        <form action="{{ route('admin.hotel.update', ['id' => $oldhotel->id]) }}" method="POST"
-                            enctype="multipart/form-data" class="p-10 bg-white rounded shadow-xl">
+                            <div>
+                                <p class="text-blue-500 text-center text-6xl italic">{{ Session::get('success') }}
+                                </p>
+                            </div>
+                        @endif
+                        <form action="" method="POST" enctype="multipart/form-data"
+                            class="p-10 bg-white rounded shadow-xl">
                             @csrf
                             @method('PUT')
+
                             <p class="text-lg text-gray-800 font-medium pb-4">Update Hotel</p>
                             <div class="">
-                                <label class="block text-sm text-gray-600" for="cus_name">Name</label>
-                                <input value="{{ $oldhotel->name }}"
+                                <label class="block text-sm text-gray-600" for="cus_name">Hotel Name</label>
+                                <select name="hotel_id" id="hotel_id" class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded">
+                                    @foreach ($hotel_names as $hotel)
+                                        <option value="{{ $hotel->id }}" {{ $room->hotel_id == $hotel->id ? 'selected' : '' }}>{{ $hotel->name }}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('room_number')
+                                    <p class="text-red-500 text-lg italic">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div class="">
+                                <label class="block text-sm text-gray-600" for="cus_name">Room_Number</label>
+                                <input value="{{ $room->room_number }}"
                                     class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="name"
-                                    name="name" type="text" placeholder="Hotel Name">
-                                @error('name')
+                                    name="room_number" type="text" placeholder="room_number">
+                                @error('room_number')
                                     <p class="text-red-500 text-lg italic">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div class="">
-                                <label class="block text-sm text-gray-600" for="cus_name">City</label>
-                                <input value="{{ $oldhotel->city }}"
-                                    class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="city"
-                                    name="city" type="text" placeholder="City">
-                                @error('city')
+                                <label class="block text-sm text-gray-600" for="cus_name">Description</label>
+                                <textarea class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded"   name="description" id="description" cols="30" rows="5">{{$room->description}} </textarea>
+                                @error('description')
                                     <p class="text-red-500 text-lg italic">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div class="">
-                                <label class="block text-sm text-gray-600" for="cus_name">Country</label>
-                                <input value="{{ $oldhotel->country }}"
+                                <label class="block text-sm text-gray-600" for="cus_name">Price</label>
+                                <input value="{{ $room->price }}"
                                     class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="country"
-                                    name="country" type="text" placeholder="Country">
-                                @error('country')
+                                    name="country" type="text" placeholder="Price">
+                                @error('price')
                                     <p class="text-red-500 text-lg italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="">
+                            <div class="mb-4">
+                                <label class="block text-sm text-gray-600" for="room_type">Room Type</label>
+                                <select name="room_type" id="room_type"
+                                    class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded">
+                                    @foreach ($room_types as $key => $value)
+                                        <option value="{{ $key }}"
+                                            {{ $room->room_type == $key ? 'selected' : '' }}>{{ $value }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('room_type')
+                                    <p class="text-red-500 text-lg italic">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            {{-- <div class="">
                                 <label class="block text-sm text-gray-600" for="image">Hotel Image</label>
-                                <img src="{{  $oldhotel->image  }}" class="w-16 h-16 object-cover mb-4"
-                                    alt="Current Image">
+                                <img src=" " class="w-16 h-16 object-cover mb-4" alt="Current Image">
                                 <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="image"
                                     name="image" type="file">
 
                                 @error('image')
                                     <p class="text-red-500 text-lg italic">{{ $message }}</p>
                                 @enderror
-                            </div>
+                            </div> --}}
                             <div class="mt-6">
                                 <button class="px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded"
                                     type="submit">Submit</button>

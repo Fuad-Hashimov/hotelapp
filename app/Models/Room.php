@@ -9,7 +9,13 @@ class Room extends Model
 {
     use HasFactory;
 
-    protected $table = "room";
+
+    const ROOM_TYPES = [
+        'vip' => 'VIP',
+        'econom' => 'Econom'
+    ];
+
+    protected $table = "rooms";
     protected $fillable = [
         'room_number',
         'description',
@@ -17,8 +23,6 @@ class Room extends Model
         'room_type',
         'price'
     ];
-
-
 
     public function hotel(){
         return $this->belongsTo(Hotel::class);

@@ -1,19 +1,24 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Admin;
 
 use App\Http\Requests\HotelFormsRequest;
 use App\Models\Hotel;
 
 class HotelService
 {
-    public function index()
+    public function getAll()
     {
         $hotels = Hotel::Paginate(5);
         return $hotels;
     }
 
-    public function edit($id)
+    public function getHotelNames(){
+        $hotelNames = Hotel::select('name')->get();
+        return $hotelNames;
+    }
+
+    public function getById($id)
     {
         $hotel = Hotel::findOrFail($id);
         return $hotel;
@@ -37,7 +42,7 @@ class HotelService
     }
 
 
-    public function store(HotelFormsRequest $hotel)
+    public function create(HotelFormsRequest $hotel)
     {
         $destinationPath = 'hotelImages/';
         $imagePath = ImageUploadService::uploadImage($hotel->image, $destinationPath);
@@ -51,7 +56,7 @@ class HotelService
         $newhotel->save();
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
         $hotel = Hotel::findOrFail($id);
         $imagePath = $hotel->image;

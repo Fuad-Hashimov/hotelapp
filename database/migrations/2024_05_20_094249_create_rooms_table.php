@@ -13,17 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('rooms')) {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            $table->string('room_number');
+            $table->string('room_number')->unique();
             $table->string('description');
-            $table->decimal('price',8,2);
-            $table->enum('room_type',['vip','econom']);
+            $table->decimal('price', 8, 2);
+            $table->enum('room_type', ['vip', 'econom']);
             $table->foreignId('hotel_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
-    }
     }
 
     /**

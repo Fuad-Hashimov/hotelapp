@@ -19,7 +19,6 @@
         </div>
     </header>
 
-
     <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
         @if (Session::has('success'))
             <div>
@@ -29,14 +28,14 @@
             </div>
         @endif
         <main class="w-full flex-grow p-6">
-            <h1 class="w-full text-3xl text-black pb-6">Home Control Page</h1>
+            <h1 class="w-full text-3xl text-black pb-6">Room Control Page</h1>
             <div class="flex flex-wrap">
                 <div class="w-full lg:w-2/4  mx-auto mt-6 pl-0 lg:pl-2">
                     <p class="text-xl pb-6 flex items-center">
                         <i class="fas fa-list mr-3"></i> Hotel Create Form
                     </p>
                     <div class="leading-loose">
-                        <form action="{{ route('admin.hotel.store') }}" method="POST" enctype="multipart/form-data"
+                        <form action="" method="POST" enctype="multipart/form-data"
                             class="p-10 bg-white rounded shadow-xl">
                             @csrf
                             <p class="text-lg text-gray-800 font-medium pb-4">Create New Hotel</p>
@@ -88,31 +87,31 @@
                     <table class="min-w-full bg-white">
                         <thead class="bg-gray-800 text-white">
                             <tr>
-                                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Image</td>
-                                <th class="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">Name</th>
-                                <th class="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">City</th>
-                                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Country</th>
-                                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">All User Likes</td>
+                                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Room Number</td>
+                                <th class="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">Description</th>
+                                <th class="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">Hotel Name</th>
+                                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Room Type</th>
+                                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Price</td>
                                 <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Update</th>
                                 <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Delete</td>
                             </tr>
                         </thead>
                         <tbody class="text-gray-700">
 
-                            @foreach ($hotels as $hotel)
-
+                                @foreach ($rooms as $room)
                                 <tr>
-                                    <td class="w-1/3 text-left py-3 px-4">
-                                        <img src="{{ $hotel->image }}" class="w-16 h-16 object-cover" alt="">
-                                    </td>
-                                    <td class="w-1/3 text-left py-3 px-4">{{ $hotel->name }}</td>
-                                    <td class="w-1/3 text-left py-3 px-4">{{ $hotel->city }}</td>
-                                    <td class="w-1/3 text-left py-3 px-4">{{ $hotel->country }}</td>
-                                    <td class="w-1/3 text-left py-3 px-4">{{ $hotel->likes }}</td>
+                                    {{-- <td class="w-1/3 text-left py-3 px-4">
+                                        <img src="" class="w-16 h-16 object-cover" alt="">
+                                    </td> --}}
+                                    <td class="w-1/3 text-left py-3 px-4">{{ $room->room_number}}</td>
+                                    <td class="w-1/3 text-left py-3 px-4">{{ $room->description}}</td>
+                                    <td class="w-1/3 text-left py-3 px-4">{{ $room->hotel->name }}</td>
+                                    <td class="w-1/3 text-left py-3 px-4">{{$room->room_type }}</td>
+                                    <td class="w-1/3 text-left py-3 px-4">{{$room->price }}</td>
                                     <td class="text-left py-3 px-4"><a class="hover:text-blue-500"
-                                            href="{{route('admin.hotel.edit',$hotel->id)}}">Edit</a></td>
+                                            href="{{route('admin.room.edit',$room->id)}}">Edit</a></td>
                                     <td class="text-left py-3 px-4">
-                                        <form action="{{ route('admin.hotel.destroy', ['id' => $hotel->id]) }}"
+                                        <form action=""
                                             method="post">
                                             @csrf
                                             @method('DELETE')
@@ -120,11 +119,14 @@
                                         </form>
                                     </td>
                                 </tr>
-                            @endforeach
+                                @endforeach
+
+
+
 
                         </tbody>
                     </table>
-                    {{ $hotels->links() }}
+                    {{ $rooms->links() }}
                 </div>
 
             </div>

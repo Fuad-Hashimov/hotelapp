@@ -46,7 +46,11 @@
             </a>
             <a href="{{route("admin.hotel.index")}}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                 <i class="fas fa-align-left mr-3"></i>
-              Hotels Db
+             Hotel Control
+            </a>
+            <a href="{{route("admin.room.index")}}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-align-left mr-3"></i>
+              Room Control
             </a>
             <a href="{{route("admin.tabs")}}" class="flex items-center active-nav-link text-white py-4 pl-6 nav-item">
                 <i class="fas fa-tablet-alt mr-3"></i>
