@@ -13,6 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('addresses')) {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->string("city");
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->foreign("customers_id")->references('id')->on('customers');
             $table->timestamps();
         });
+    }
     }
 
     /**

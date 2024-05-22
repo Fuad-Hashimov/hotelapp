@@ -6,6 +6,7 @@
     <title>Tailwind Admin Template</title>
     <meta name="author" content="David Grzyb">
     <meta name="description" content="">
+    <base href="/admin">
 
     <!-- Tailwind -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
@@ -43,9 +44,9 @@
                 <i class="fas fa-table mr-3"></i>
                 Tables
             </a>
-            <a href="{{route("admin.forms")}}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <a href="{{route("admin.hotel.index")}}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                 <i class="fas fa-align-left mr-3"></i>
-                Forms
+              Hotels Db
             </a>
             <a href="{{route("admin.tabs")}}" class="flex items-center active-nav-link text-white py-4 pl-6 nav-item">
                 <i class="fas fa-tablet-alt mr-3"></i>

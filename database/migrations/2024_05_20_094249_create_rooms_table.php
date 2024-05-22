@@ -13,12 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('works')) {
-        Schema::create('works', function (Blueprint $table) {
+        if (!Schema::hasTable('rooms')) {
+        Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            $table->string('work');
-            $table->bigInteger('customers_id')->unsigned();
-            $table->foreign('customers_id')->references('id')->on('customers');
+            $table->string('room_number');
+            $table->string('description');
+            $table->decimal('price',8,2);
+            $table->enum('room_type',['vip','econom']);
+            $table->foreignId('hotel_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('works');
+        Schema::dropIfExists('rooms');
     }
 };

@@ -13,13 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('hotels', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('address');
-            $table->timestamps();
-            
-        });
+
+            Schema::create('hotels', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->string('city');
+                $table->string('country');
+                $table->integer('likes')->default(0);
+                $table->string('image')->nullable();
+                $table->timestamps();
+            });
+
     }
 
     /**

@@ -17,7 +17,7 @@ class AuthUserService
 
         if ($validator->passes()) {
             if (Auth::attempt($user)) {
-                return redirect()->route('account.hotel');
+                return redirect()->route('welcome');
             } else {
                 return redirect()->route('account.login')->with('error', 'Email or password incorrect');
             }
