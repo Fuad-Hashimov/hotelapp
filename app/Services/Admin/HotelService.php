@@ -24,6 +24,10 @@ class HotelService
         return $hotel;
     }
 
+    public function getNameById($name){
+        return Hotel::where('name',$name)->pluck('id');
+    }
+
     public function update(HotelFormsRequest $request, $id)
     {
         $hotel = Hotel::findOrFail($id);

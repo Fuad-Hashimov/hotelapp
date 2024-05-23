@@ -74,6 +74,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::prefix('room')->group(function(){
             Route::get('/',[RoomController::class,'index'])->name('admin.room.index');
             Route::get('edit/{id}',[RoomController::class,'edit'])->name('admin.room.edit');
+            Route::post('/',[RoomController::class,'store'])->name('admin.room.store');
+            Route::delete('delete/{id}',[RoomController::class,'destroy'])->name("admin.room.delete");
+
         });
 
 

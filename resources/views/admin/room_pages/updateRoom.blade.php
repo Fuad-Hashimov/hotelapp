@@ -74,7 +74,7 @@
                                 <label class="block text-sm text-gray-600" for="cus_name">Price</label>
                                 <input value="{{ $room->price }}"
                                     class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="country"
-                                    name="country" type="text" placeholder="Price">
+                                    name="price" type="text" placeholder="Price">
                                 @error('price')
                                     <p class="text-red-500 text-lg italic">{{ $message }}</p>
                                 @enderror

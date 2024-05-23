@@ -20,54 +20,87 @@
     </header>
 
     <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
-        @if (Session::has('success'))
-            <div>
-                <p class="text-blue-500 text-center text-6xl italic">{{ Session::get('success') }}
-                </p>
 
-            </div>
-        @endif
         <main class="w-full flex-grow p-6">
             <h1 class="w-full text-3xl text-black pb-6">Room Control Page</h1>
             <div class="flex flex-wrap">
                 <div class="w-full lg:w-2/4  mx-auto mt-6 pl-0 lg:pl-2">
                     <p class="text-xl pb-6 flex items-center">
-                        <i class="fas fa-list mr-3"></i> Hotel Create Form
+                        <i class="fas fa-list mr-3"></i> Room Create Form
                     </p>
                     <div class="leading-loose">
-                        <form action="" method="POST" enctype="multipart/form-data"
+                        @if (Session::has('success'))
+                            <div>
+                                <p class="text-blue-500 text-center text-6xl italic">{{ Session::get('success') }}
+                                </p>
+
+                            </div>
+                        @endif
+                        <form action="{{ route('admin.room.store') }}" method="POST" enctype="multipart/form-data"
                             class="p-10 bg-white rounded shadow-xl">
                             @csrf
-                            <p class="text-lg text-gray-800 font-medium pb-4">Create New Hotel</p>
+                            <p class="text-lg text-gray-800 font-medium pb-4">Update Hotel</p>
                             <div class="">
-                                <label class="block text-sm text-gray-600" for="cus_name">Name</label>
-                                <input value="{{old('name')}}" class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="name"
-                                    name="name" type="text" placeholder="Hotel Name">
-                                @error('name')
+                                <label class="block text-sm text-gray-600" for="cus_name">Hotel Name</label>
+                                <select name="hotelName" id="hotel_id"
+                                    class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded">
+                                    @foreach ($hotel_names as $hotel)
+                                        <option value="{{ $hotel->name }}">{{ $hotel->name }}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('hotelName')
                                     <p class="text-red-500 text-lg italic">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div class="">
-                                <label class="block text-sm text-gray-600" for="cus_name">City</label>
-                                <input value="{{old('city')}}" class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="city"
-                                    name="city" type="text" placeholder="City">
-                                @error('city')
+                                <label class="block text-sm text-gray-600" for="cus_name">Room_Number</label>
+                                <input value="{{ old('room_number') }}"
+                                    class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="name"
+                                    name="room_number" type="text" placeholder="room_number">
+
+                                @error('room_number')
+                                    <p class="text-red-500 text-lg italic">{{ $message }}</p>
+                                @enderror
+
+                            </div>
+
+                            <div class="">
+                                <label class="block text-sm text-gray-600" for="cus_name">Description</label>
+                                <textarea class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" name="description" id="description" cols="30"
+                                    rows="5">{{ old('description') }}</textarea>
+                                @error('description')
                                     <p class="text-red-500 text-lg italic">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div class="">
-                                <label class="block text-sm text-gray-600" for="cus_name">Country</label>
-                                <input value="{{old('country')}}" class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="country"
-                                    name="country" type="text" placeholder="Country">
-                                @error('country')
+                                <label class="block text-sm text-gray-600" for="cus_name">Price</label>
+                                <input value="{{ old('price') }}"
+                                    class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="price"
+                                    name="price" type="text" placeholder="Price">
+                                @error('price')
                                     <p class="text-red-500 text-lg italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="">
-                                <label class="block text-sm text-gray-600" for="cus_name">Hotel Image</label>
-                                <input value="{{old('image')}}" class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="image"
-                                    name="image" type="file">
-                                @error('image')
+                            <div class="mb-4">
+                                <label class="block text-sm text-gray-600" for="room_type">Room Type</label>
+                                <select name="room_type" id="room_type"
+                                    class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded">
+                                    @foreach ($room_types as $key => $value)
+                                        <option value="{{ $key }}">{{ $value }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('room_type')
+                                    <p class="text-red-500 text-lg italic">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div class="mb-5">
+                                <label for="text" class="block mb-2 text-sm font-medium text-gray-900 ">Room Images</label>
+                                <input  type="file" id="images" name="images[]"   multiple id="text"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder=" " />
+                                    @error('images')
                                     <p class="text-red-500 text-lg italic">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -98,28 +131,27 @@
                         </thead>
                         <tbody class="text-gray-700">
 
-                                @foreach ($rooms as $room)
+                            @foreach ($rooms as $room)
                                 <tr>
                                     {{-- <td class="w-1/3 text-left py-3 px-4">
                                         <img src="" class="w-16 h-16 object-cover" alt="">
                                     </td> --}}
-                                    <td class="w-1/3 text-left py-3 px-4">{{ $room->room_number}}</td>
-                                    <td class="w-1/3 text-left py-3 px-4">{{ $room->description}}</td>
+                                    <td class="w-1/3 text-left py-3 px-4">{{ $room->room_number }}</td>
+                                    <td class="w-1/3 text-left py-3 px-4">{{ $room->description }}</td>
                                     <td class="w-1/3 text-left py-3 px-4">{{ $room->hotel->name }}</td>
-                                    <td class="w-1/3 text-left py-3 px-4">{{$room->room_type }}</td>
-                                    <td class="w-1/3 text-left py-3 px-4">{{$room->price }}</td>
+                                    <td class="w-1/3 text-left py-3 px-4">{{ $room->room_type }}</td>
+                                    <td class="w-1/3 text-left py-3 px-4">{{ $room->price }}</td>
                                     <td class="text-left py-3 px-4"><a class="hover:text-blue-500"
-                                            href="{{route('admin.room.edit',$room->id)}}">Edit</a></td>
+                                            href="{{ route('admin.room.edit', $room->id) }}">Edit</a></td>
                                     <td class="text-left py-3 px-4">
-                                        <form action=""
-                                            method="post">
+                                        <form action="{{ route('admin.room.delete', $room->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="hover:text-blue-500">Delete</button>
                                         </form>
                                     </td>
                                 </tr>
-                                @endforeach
+                            @endforeach
 
 
 

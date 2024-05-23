@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Room;
+use App\Http\Requests\RoomFormsRequest;
 use App\Services\Admin\RoomService;
 use Illuminate\Http\Request;
 
@@ -17,9 +17,11 @@ class RoomController extends Controller
 
     public function index()
     {
-        $rooms = $this->roomService->getAll();
-
-        return view('admin.room_pages.room', compact('rooms'));
+        $data = $this->roomService->getAll();
+        $rooms = $data['rooms'];
+        $room_types = $data['room_types'];
+        $hotel_names = $data['hotelNames'];
+        return view('admin.room_pages.room', compact('rooms', 'room_types', 'hotel_names'));
     }
 
 
@@ -29,9 +31,18 @@ class RoomController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(RoomFormsRequest $request)
     {
-        //
+
+
+        $result = $this->roomService->create($request);
+        if($result['success']){
+            return redirect()->back()->with('success',$result['message']);
+        }
+        else{
+            return redirect()->back()->with('success',$result['message']);
+        }
+
     }
 
 
@@ -60,6 +71,12 @@ class RoomController extends Controller
 
     public function destroy($id)
     {
-        //
+        $result = $this->roomService->delete($id);
+        if($result['success']){
+            return redirect()->back()->with('success',$result['message']);
+        }
+        else{
+            return redirect()->back()->with('error',$result['message']);
+        }
     }
 }
