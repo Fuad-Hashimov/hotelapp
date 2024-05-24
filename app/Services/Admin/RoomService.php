@@ -3,12 +3,10 @@
 namespace App\Services\Admin;
 
 use App\Http\Requests\RoomFormsRequest;
-
 use App\Models\Room;
 
 class RoomService
 {
-
     protected $hotelService;
     protected $imageUploadService;
     protected  $room_types = Room::ROOM_TYPES;
@@ -52,7 +50,8 @@ class RoomService
                 'success' => false,
                 'message' => "Hotelin Bu nomreli otagi var"
             ];
-        } else {
+        }
+        else {
             $newRoom = new Room();
             $newRoom->hotel_id = $hotelId[0];
             $newRoom->room_number = $request->room_number;
@@ -66,16 +65,17 @@ class RoomService
 
             return [
                 'success' => true,
-                'message' => "Oda başarıyla eklendi"
+                'message' => "Otaq elave edildi"
             ];
         }
     }
+
+
 
     public function delete($id){
         $room = Room::with('roomImages')->findOrFail($id);
 
         foreach($room->roomImages as $image){
-
             $this->imageUploadService->deleteImage('room_images/' . $image->file_name);
             $image->delete();
         }
@@ -83,7 +83,7 @@ class RoomService
         $room->delete();
         return [
             'success' => true,
-            'message' => 'Oda başarıyla silindi.'
+            'message' => 'Otaq silindi.'
         ];
     }
 }

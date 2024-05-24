@@ -4,12 +4,9 @@ use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\LoginController as AdminLoginController;
 use App\Http\Controllers\admin\HotelController;
 use App\Http\Controllers\admin\RoomController;
-
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
-
 use App\Http\Controllers\LoginController;
-
 use Illuminate\Support\Facades\Route;
 
 
@@ -22,8 +19,6 @@ Route::get('/customer/edit/{customer}', [CustomerController::class, 'edit'])->na
 Route::delete('/customer/delete/{id}', [CustomerController::class, 'destroy'])->name('customer_destroy');
 Route::put('/customer/update/{id}', [CustomerController::class, 'update'])->name('customer_update');
 Route::post('/customer', [CustomerController::class, 'store'])->name('customer_store');
-
-
 
 
 
@@ -45,7 +40,6 @@ Route::group(['prefix' => 'account'], function () {
     });
 });
 
-// require base_path('AdminRoutes/adminRoute.php');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::group(['middleware' => 'guest'], function () {
@@ -58,7 +52,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
         Route::get('blank', [DashboardController::class, 'blank'])->name('admin.blank');
         Route::get('calendar', [DashboardController::class, 'calendar'])->name('admin.calendar');
-
         Route::get('tables', [DashboardController::class, 'tables'])->name('admin.tables');
         Route::get('tabs', [DashboardController::class, 'tabs'])->name('admin.tabs');
 
@@ -76,7 +69,7 @@ Route::group(['prefix' => 'admin'], function () {
             Route::get('edit/{id}',[RoomController::class,'edit'])->name('admin.room.edit');
             Route::post('/',[RoomController::class,'store'])->name('admin.room.store');
             Route::delete('delete/{id}',[RoomController::class,'destroy'])->name("admin.room.delete");
-
+            //Route::update('update/{id}',[RoomController::class,'update'])->name('admin.room.update');
         });
 
 
